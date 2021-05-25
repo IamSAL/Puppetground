@@ -1,0 +1,15 @@
+{
+  "name": "pandokanbot",
+  "version": "1.0.0",
+  "description": "To auto submit customer's information in gettingtoknowyou.co for cigarette sellers in BD",
+  "main": "puppet.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node puppet.js"
+  },
+  "author": "sal",
+  "license": "ISC",
+  "dependencies": {
+    "puppeteer": "^9.1.1"
+  }
+}
