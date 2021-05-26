@@ -1,7 +1,7 @@
 const puppeteer = require("puppeteer");
 const fs = require("fs");
 const { customers, retailer, signtareFontUrl } = require("./data");
-const { TargetError } = require("./utils");
+const { TargetError, TakenError } = require("./utils");
 const { ID: retailerID, phone: retailerPhone } = retailer;
 
 const fieldName = "input#nameid";
@@ -200,7 +200,22 @@ const finalbrandBtn = "button.btn4";
       await page.focus("input#inlineFormInputGroup");
       await page.keyboard.type(customer.phone);
       await page.click("button.btn4");
+      await page.waitForNavigation();
       console.log("Phone number entered");
+      try {
+        if (
+          await page.waitForFunction(
+            `document.querySelector('p.back-error.error-item.text-left').innerText.includes('This phone number has already been used')`
+          )
+        ) {
+          throw new TakenError("Phone number taken, Skipping to next...");
+        }
+      } catch (e) {
+        if (e instanceof TakenError) {
+          throw e;
+        }
+        console.log("Phone number accepted");
+      }
       await page.waitForSelector("input#nameid");
       await fillCustomerDetails(customer);
       await fillConsentForm();

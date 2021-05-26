@@ -1,2 +1,3 @@
 class TargetError extends Error {}
-module.exports = { TargetError };
+class TakenError extends Error {}
+module.exports = { TargetError, TakenError };
