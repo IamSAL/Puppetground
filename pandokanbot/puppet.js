@@ -1,4 +1,5 @@
 const puppeteer = require("puppeteer");
+const fs = require("fs");
 const { customers, retailer, signtareFontUrl } = require("./data");
 const { TargetError } = require("./utils");
 const { ID: retailerID, phone: retailerPhone } = retailer;
@@ -25,7 +26,7 @@ const finalbrandBtn = "button.btn4";
   const browser = await puppeteer.launch({
     headless: false,
     defaultViewport: null,
-    slowMo: 80,
+    args: ["--start-maximized"],
   });
   browser.on("disconnected", () => {
     console.log("::::Puppet stopped::::");
@@ -63,7 +64,7 @@ const finalbrandBtn = "button.btn4";
     );
 
     await page.waitForTimeout(2000);
-    await page.screenshot({ path: `${customer.name}.png` });
+    await page.screenshot({ path: `sign_${customer.name}.png` });
     await page.evaluate(() => {
       document.forms[0].submit();
     });
@@ -108,25 +109,40 @@ const finalbrandBtn = "button.btn4";
     await page.keyboard.type(retailerPhone);
     await page.evaluate((formRetailerBtn) => {
       document.querySelector(formRetailerBtn).click();
+      console.log(document.querySelector(formRetailerBtn) + " Clicked");
     }, formRetailerBtn);
+
     try {
       await page.waitForSelector("div#vlidation_msg", { visible: true });
-      throw new TargetError();
+      let targetFilled = await page.evaluate(() => {
+        let text = document.querySelector("div#vlidation_msg").innerText;
+        return text === "Your target is filled up.";
+      });
+      if (await targetFilled) {
+        throw new TargetError();
+      } else {
+        console.log("Waiting for OTP...");
+        await page.waitForFunction(
+          `document.querySelector("button#code_send").innerText.includes("Resend Code")`
+        );
+        console.log("continuing...");
+        OTPstatus = await page.evaluate(
+          (formRetailerOTP, formRetailerFinalSubmit) => {
+            let otpCode = prompt("SMS OTP:");
+            document.querySelector(formRetailerOTP).value = otpCode;
+            document.querySelector(formRetailerFinalSubmit).click();
+            return true;
+          },
+          formRetailerOTP,
+          formRetailerFinalSubmit
+        );
+      }
     } catch (e) {
       if (e instanceof TargetError) {
         throw e;
+      } else {
+        console.log(e.message);
       }
-      console.log("Target not filled yet, continuing...");
-      OTPstatus = await page.evaluate(
-        (formRetailerOTP, formRetailerFinalSubmit) => {
-          let otpCode = prompt("SMS OTP:");
-          document.querySelector(formRetailerOTP).value = otpCode;
-          document.querySelector(formRetailerFinalSubmit).click();
-          return true;
-        },
-        formRetailerOTP,
-        formRetailerFinalSubmit
-      );
     }
 
     console.log("Otp submitted:", OTPstatus);
@@ -134,10 +150,11 @@ const finalbrandBtn = "button.btn4";
   };
 
   const fillBrandQuizForm = async () => {
-    await page.waitForSelector(finalbrand);
+    await page.waitForFunction(
+      `  document.querySelector('h2').innerText.includes("name of the brand")`
+    );
     await page.click(finalbrand);
     await page.click(finalbrandBtn);
-    await page.waitForNavigation({ waitUntil: "domcontentloaded" });
     console.log("Brand quick done");
     return true;
   };
@@ -145,6 +162,10 @@ const finalbrandBtn = "button.btn4";
   const fillTrialForm = async () => {
     await page.waitForSelector(finalbrand);
     console.log("processing ask for trial form...");
+    await page.waitForFunction(
+      `  document.querySelector('h2').innerText.includes("ask you to try")`
+    );
+
     await page.click(finalbrand);
     await page.evaluate(() => {
       document.forms[0].submit();
@@ -160,7 +181,7 @@ const finalbrandBtn = "button.btn4";
     await page.evaluate(() => {
       document.forms[0].submit();
     });
-    await page.waitForNavigation();
+    // await page.waitForNavigation();
   };
   const skipVideo = async () => {
     await page.waitForSelector("video#videoPlayer");
@@ -174,19 +195,23 @@ const finalbrandBtn = "button.btn4";
       await page.goto("https://gettingtoknowyou.co/");
       await page.waitForSelector("button.btn1.lang_btn");
       await page.click("button.btn1.lang_btn");
+      console.log("Language selected...");
       await page.waitForSelector("input#inlineFormInputGroup");
       await page.focus("input#inlineFormInputGroup");
       await page.keyboard.type(customer.phone);
       await page.click("button.btn4");
+      console.log("Phone number entered");
       await page.waitForSelector("input#nameid");
       await fillCustomerDetails(customer);
       await fillConsentForm();
       await signInCanvas(customer);
       await fillOTPForm();
       await skipVideo();
+      console.log("Video Skipped...");
       await fillBrandQuizForm();
       await fillTrialForm();
-      console.log("Done:", customer.name);
+      console.log("Done:");
+      fs.appendFileSync("Result.txt", `PASS:    ${customer.name}\n`);
     } catch (e) {
       if (e instanceof TargetError) {
         console.log("Your Target is filled up, Can't submit more");
@@ -195,6 +220,7 @@ const finalbrandBtn = "button.btn4";
         console.log(e.message);
       }
       console.log("Failed:", customer.name);
+      fs.appendFileSync("Result.txt", `FAIL:    ${customer.name}\n`);
     }
   }
   console.log(":::END:::");
