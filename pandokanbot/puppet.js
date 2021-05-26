@@ -199,17 +199,17 @@ const finalbrandBtn = "button.btn4";
       await page.waitForSelector("input#inlineFormInputGroup");
       await page.focus("input#inlineFormInputGroup");
       await page.keyboard.type(customer.phone);
-      await page.click("button.btn4");
+      await page.evaluate(() => {
+        document.forms[0].submit();
+      });
       await page.waitForNavigation();
       console.log("Phone number entered");
       try {
-        if (
-          await page.waitForFunction(
-            `document.querySelector('p.back-error.error-item.text-left').innerText.includes('This phone number has already been used')`
-          )
-        ) {
-          throw new TakenError("Phone number taken, Skipping to next...");
-        }
+        console.log("waiting for phone number confirmation...");
+        await page.waitForFunction(
+          `document.querySelector('p.back-error.error-item.text-left').innerText.includes('This phone number has already been used')`
+        );
+        throw new TakenError("Phone number taken, Skipping to next...");
       } catch (e) {
         if (e instanceof TakenError) {
           throw e;

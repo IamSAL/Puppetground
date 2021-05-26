@@ -1,15 +1,2 @@
 FAIL:    Akter
-FAIL:    Bilal
-FAIL:    Kawasar
-FAIL:    hasan
-FAIL:    ali
-FAIL:    Akter
-FAIL:    Bilal
-FAIL:    Kawasar
-FAIL:    hasan
-FAIL:    ali
-FAIL:    Akter
-FAIL:    Bilal
-FAIL:    Kawasar
-FAIL:    hasan
-FAIL:    ali
+PASS:    Bilal
