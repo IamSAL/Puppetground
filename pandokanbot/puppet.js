@@ -114,35 +114,26 @@ const finalbrandBtn = "button.btn4";
 
     try {
       await page.waitForSelector("div#vlidation_msg", { visible: true });
-      let targetFilled = await page.evaluate(() => {
-        let text = document.querySelector("div#vlidation_msg").innerText;
-        return text === "Your target is filled up.";
-      });
-      if (await targetFilled) {
-        throw new TargetError();
-      } else {
-        console.log("Waiting for OTP...");
-        await page.waitForFunction(
-          `document.querySelector("button#code_send").innerText.includes("Resend Code")`
-        );
-        console.log("continuing...");
-        OTPstatus = await page.evaluate(
-          (formRetailerOTP, formRetailerFinalSubmit) => {
-            let otpCode = prompt("SMS OTP:");
-            document.querySelector(formRetailerOTP).value = otpCode;
-            document.querySelector(formRetailerFinalSubmit).click();
-            return true;
-          },
-          formRetailerOTP,
-          formRetailerFinalSubmit
-        );
-      }
+      throw new TargetError();
     } catch (e) {
       if (e instanceof TargetError) {
         throw e;
-      } else {
-        console.log(e.message);
       }
+      console.log("Waiting for OTP...");
+      await page.waitForFunction(
+        `document.querySelector("button#code_send").innerText.includes("Resend Code")`
+      );
+      console.log("continuing...");
+      OTPstatus = await page.evaluate(
+        (formRetailerOTP, formRetailerFinalSubmit) => {
+          let otpCode = prompt("SMS OTP:");
+          document.querySelector(formRetailerOTP).value = otpCode;
+          document.querySelector(formRetailerFinalSubmit).click();
+          return true;
+        },
+        formRetailerOTP,
+        formRetailerFinalSubmit
+      );
     }
 
     console.log("Otp submitted:", OTPstatus);
