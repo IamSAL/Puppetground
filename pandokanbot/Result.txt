@@ -1,2 +1,278 @@
 FAIL:    Akter
 PASS:    Bilal
+FAIL:    sheikh shakil
+FAIL:    Rahim
+FAIL:    karim
+FAIL:    Abrar 
+FAIL:    Kazi Masud
+FAIL:    Akbar ahmed
+FAIL:    himel nag
+FAIL:    Pony chowdhury
+FAIL:    Helal khan
+FAIL:    Dildar
+FAIL:    Monayem
+FAIL:    Akter
+FAIL:    Bilal
+FAIL:    Kawasar
+FAIL:    hasan
+FAIL:    ali
+FAIL:    rahim
+FAIL:    isthi
+FAIL:    kobir
+FAIL:    al amin
+FAIL:    pranto
+FAIL:    ahad
+FAIL:    oppo
+FAIL:    alom
+FAIL:    manik
+FAIL:    mamon
+FAIL:    jalil
+FAIL:    tohin
+FAIL:    somon
+FAIL:    mostak
+FAIL:    lal miah
+FAIL:    naion
+FAIL:    shohel
+FAIL:    basar
+FAIL:    arsab
+FAIL:    aksir
+FAIL:    anoar
+FAIL:    zaman
+FAIL:    nasir
+FAIL:    ikbal
+FAIL:    sheikh shakil
+FAIL:    Rahim
+FAIL:    karim
+FAIL:    Abrar 
+FAIL:    Kazi Masud
+FAIL:    Akbar ahmed
+FAIL:    sheikh shakil
+FAIL:    Rahim
+FAIL:    sheikh shakil
+FAIL:    Rahim
+FAIL:    sheikh shakil
+FAIL:    sheikh shakil
+FAIL:    sheikh shakil
+FAIL:    Rahim
+PASS:    sheikh shakil
+FAIL:    sheikh shakil
+FAIL:    sheikh shakil
+FAIL:    sheikh shakil
+FAIL:    sheikh shakil
+FAIL:    Rahim
+FAIL:    sheikh shakil
+FAIL:    Rahim
+FAIL:    sheikh shakil
+FAIL:    Rahim
+PASS:    karim
+FAIL:    kased
+PASS:    kawsar
+FAIL:    faruk
+PASS:    jahid
+FAIL:    Zibon
+PASS:    Sakil
+FAIL:    awal
+FAIL:    kased
+FAIL:    kawsar
+FAIL:    faruk
+FAIL:    jahid
+FAIL:    Zibon
+FAIL:    Sakil
+FAIL:    awal
+FAIL:    Rasel
+FAIL:    Shahin
+FAIL:    Milon
+FAIL:    Tanzil
+FAIL:    sheikh shakil
+FAIL:    Rahim
+FAIL:    karim
+FAIL:    Abrar 
+FAIL:    Kazi Masud
+FAIL:    Akbar ahmed
+FAIL:    himel nag
+FAIL:    Pony chowdhury
+FAIL:    Helal khan
+FAIL:    Dildar
+FAIL:    Monayem
+FAIL:    Akter
+FAIL:    Bilal
+FAIL:    Kawasar
+FAIL:    hasan
+FAIL:    ali
+FAIL:    rahim
+FAIL:    isthi
+FAIL:    kobir
+FAIL:    al amin
+FAIL:    pranto
+FAIL:    ahad
+FAIL:    oppo
+FAIL:    alom
+FAIL:    manik
+FAIL:    mamon
+FAIL:    jalil
+FAIL:    tohin
+FAIL:    somon
+FAIL:    mostak
+FAIL:    lal miah
+FAIL:    naion
+FAIL:    shohel
+FAIL:    basar
+FAIL:    arsab
+FAIL:    aksir
+FAIL:    anoar
+FAIL:    zaman
+FAIL:    nasir
+FAIL:    ikbal
+FAIL:    kased
+FAIL:    kawsar
+FAIL:    faruk
+FAIL:    jahid
+FAIL:    Zibon
+FAIL:    Sakil
+FAIL:    awal
+FAIL:    Rasel
+FAIL:    Shahin
+FAIL:    Milon
+FAIL:    Tanzil
+FAIL:    sheikh shakil
+FAIL:    Rahim
+FAIL:    karim
+FAIL:    Abrar 
+FAIL:    Kazi Masud
+FAIL:    Akbar ahmed
+FAIL:    himel nag
+FAIL:    Pony chowdhury
+FAIL:    Helal khan
+FAIL:    Dildar
+FAIL:    Monayem
+FAIL:    Akter
+FAIL:    Bilal
+FAIL:    Kawasar
+FAIL:    hasan
+FAIL:    ali
+FAIL:    rahim
+FAIL:    isthi
+FAIL:    kobir
+FAIL:    al amin
+FAIL:    pranto
+FAIL:    ahad
+FAIL:    oppo
+FAIL:    alom
+FAIL:    manik
+FAIL:    mamon
+FAIL:    jalil
+FAIL:    tohin
+FAIL:    somon
+FAIL:    mostak
+FAIL:    lal miah
+FAIL:    naion
+FAIL:    shohel
+FAIL:    basar
+FAIL:    arsab
+FAIL:    aksir
+FAIL:    anoar
+FAIL:    zaman
+FAIL:    nasir
+FAIL:    ikbal
+FAIL:    kased
+FAIL:    kawsar
+FAIL:    faruk
+FAIL:    jahid
+FAIL:    Zibon
+FAIL:    Sakil
+FAIL:    awal
+FAIL:    Rasel
+FAIL:    Shahin
+FAIL:    Milon
+FAIL:    Tanzil
+FAIL:    sheikh shakil
+FAIL:    Rahim
+FAIL:    karim
+FAIL:    Abrar 
+FAIL:    Kazi Masud
+FAIL:    Akbar ahmed
+FAIL:    himel nag
+FAIL:    Pony chowdhury
+FAIL:    Helal khan
+FAIL:    Dildar
+FAIL:    Monayem
+FAIL:    Akter
+FAIL:    Bilal
+FAIL:    Kawasar
+FAIL:    hasan
+FAIL:    ali
+FAIL:    rahim
+FAIL:    isthi
+FAIL:    kobir
+FAIL:    al amin
+FAIL:    pranto
+FAIL:    ahad
+FAIL:    oppo
+FAIL:    alom
+FAIL:    manik
+FAIL:    mamon
+FAIL:    jalil
+FAIL:    tohin
+FAIL:    somon
+FAIL:    mostak
+FAIL:    lal miah
+FAIL:    naion
+FAIL:    shohel
+FAIL:    basar
+FAIL:    arsab
+FAIL:    aksir
+FAIL:    anoar
+FAIL:    zaman
+FAIL:    nasir
+FAIL:    ikbal
+FAIL:    kased
+FAIL:    kawsar
+FAIL:    faruk
+FAIL:    jahid
+FAIL:    Zibon
+FAIL:    Sakil
+FAIL:    awal
+FAIL:    Rasel
+FAIL:    Shahin
+FAIL:    Milon
+FAIL:    Tanzil
+FAIL:    sheikh shakil
+FAIL:    Rahim
+FAIL:    karim
+FAIL:    Abrar 
+FAIL:    Kazi Masud
+FAIL:    Akbar ahmed
+FAIL:    himel nag
+FAIL:    Pony chowdhury
+FAIL:    Helal khan
+FAIL:    Dildar
+FAIL:    Monayem
+FAIL:    Akter
+FAIL:    Bilal
+FAIL:    Kawasar
+FAIL:    hasan
+FAIL:    ali
+FAIL:    rahim
+FAIL:    isthi
+FAIL:    kobir
+FAIL:    al amin
+FAIL:    pranto
+FAIL:    ahad
+FAIL:    oppo
+FAIL:    alom
+FAIL:    manik
+FAIL:    mamon
+FAIL:    jalil
+FAIL:    tohin
+FAIL:    somon
+FAIL:    mostak
+FAIL:    lal miah
+FAIL:    naion
+FAIL:    shohel
+FAIL:    basar
+FAIL:    arsab
+FAIL:    aksir
+FAIL:    anoar
+FAIL:    zaman
+FAIL:    nasir
+FAIL:    ikbal
