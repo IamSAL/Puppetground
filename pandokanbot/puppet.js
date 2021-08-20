@@ -135,7 +135,10 @@ const finalbrandBtn = "button.ep7_lastbtn";
     }, formRetailerBtn);
 
     try {
-      await page.waitForSelector("div#vlidation_msg", { visible: true });
+      await page.waitForSelector("p#vlidation_msg", {
+        visible: true,
+        timeout: 1000,
+      });
       throw new TargetError();
     } catch (e) {
       if (e instanceof TargetError) {
@@ -224,9 +227,11 @@ const finalbrandBtn = "button.ep7_lastbtn";
       await fillTrialForm();
       console.log("Done:");
       fs.appendFileSync("Result.txt", `PASS:    ${customer.name}\n`);
+      await page.waitForNavigation();
     } catch (e) {
       if (e instanceof TargetError) {
         console.log("Your Target is filled up, Can't submit more");
+        await page.evaluate(() => alert("Your Target Filled Up."));
         browser.disconnect();
       } else if (e instanceof TakenError) {
         console.log("phone number taken,skipping to next");
