@@ -9,22 +9,23 @@ const fieldBday = "select#day";
 const fieldBmonth = "select#month";
 const fieldByear = "select#year";
 const fieldBrand = "select#brand";
-const formFirstButton = "button.btn5";
+const formFirstButton = "button.ep2_btn";
 
-const consentCheckbox = "label.form-check-label";
+const consentCheckbox = "input#inputcheck";
 
-const formRetailerID = "input#retailerid";
-const formRetailerNum = "input#retailernumber";
+const formRetailerID = "input#retailid";
+const formRetailerNum = "input#retailphone";
 const formRetailerBtn = "button#code_send";
 const formRetailerOTP = "input#otp_code";
 const formRetailerFinalSubmit = "button#final_submit_btn";
 
 const finalbrand = "button#brand_1";
-const finalbrandBtn = "button.btn4";
+const finalbrandBtn = "button.ep7_lastbtn";
 
 (async () => {
   const browser = await puppeteer.launch({
     headless: false,
+
     defaultViewport: null,
     args: ["--start-maximized"],
   });
@@ -80,11 +81,32 @@ const finalbrandBtn = "button.btn4";
 
     await page.focus(fieldName);
     await page.keyboard.type(name);
+    await page.focus("input#phone");
+    await page.keyboard.type(user.phone);
+
     await page.select(fieldBday, bday);
     await page.select(fieldBmonth, bmonth);
     await page.select(fieldByear, byear);
-    await page.select(fieldBrand, "JPGL");
-    await page.click(formFirstButton);
+    await page.select(fieldBrand, "4");
+    await page.evaluate(() => {
+      document.forms[0].submit();
+    });
+    await page.waitForNavigation();
+
+    try {
+      console.log("waiting for phone number confirmation...");
+      await page.waitForTimeout(1500);
+      await page.waitForFunction(
+        `document.querySelectorAll('p.error-item')[1].innerText.includes('The phone has already been taken.')`
+      );
+      throw new TakenError("Phone number taken, Skipping to next...");
+    } catch (e) {
+      if (e instanceof TakenError) {
+        throw e;
+      }
+      console.log("Phone number accepted");
+    }
+
     await page.waitForSelector(consentCheckbox);
     console.log("details form filled:");
     console.log({ name, bday, bmonth, byear });
@@ -142,11 +164,11 @@ const finalbrandBtn = "button.btn4";
 
   const fillBrandQuizForm = async () => {
     await page.waitForFunction(
-      `  document.querySelector('h2').innerText.includes("name of the brand")`
+      `  document.querySelector('h4').innerText.includes("name of the brand")`
     );
     await page.click(finalbrand);
     await page.click(finalbrandBtn);
-    console.log("Brand quick done");
+    console.log("Brand quiz done");
     return true;
   };
 
@@ -154,25 +176,25 @@ const finalbrandBtn = "button.btn4";
     await page.waitForSelector(finalbrand);
     console.log("processing ask for trial form...");
     await page.waitForFunction(
-      `  document.querySelector('h2').innerText.includes("ask you to try")`
+      `document.querySelector('h4').innerText.includes("you try")`
     );
 
     await page.click(finalbrand);
     await page.evaluate(() => {
       document.forms[0].submit();
     });
+
     console.log("processing did you try form...");
     await page.waitForSelector("body:not(:empty)");
-    await page.click(finalbrand);
+    await page.select("select#brand", "1");
     await page.evaluate(() => {
       document.forms[0].submit();
     });
-    await page.waitForSelector("h2.thankyou");
+    await page.waitForSelector("h4");
     console.log("processing thank you form...");
     await page.evaluate(() => {
       document.forms[0].submit();
     });
-    // await page.waitForNavigation();
   };
   const skipVideo = async () => {
     await page.waitForSelector("video#videoPlayer");
@@ -184,29 +206,13 @@ const finalbrandBtn = "button.btn4";
   for (customer of customers) {
     try {
       await page.goto("https://gettingtoknowyou.co/");
-      await page.waitForSelector("button.btn1.lang_btn");
-      await page.click("button.btn1.lang_btn");
-      console.log("Language selected...");
-      await page.waitForSelector("input#inlineFormInputGroup");
-      await page.focus("input#inlineFormInputGroup");
-      await page.keyboard.type(customer.phone);
-      await page.evaluate(() => {
-        document.forms[0].submit();
+
+      await page.waitForSelector("a.btn_eng1", {
+        visible: true,
       });
-      await page.waitForNavigation();
-      console.log("Phone number entered");
-      try {
-        console.log("waiting for phone number confirmation...");
-        await page.waitForFunction(
-          `document.querySelector('p.back-error.error-item.text-left').innerText.includes('This phone number has already been used')`
-        );
-        throw new TakenError("Phone number taken, Skipping to next...");
-      } catch (e) {
-        if (e instanceof TakenError) {
-          throw e;
-        }
-        console.log("Phone number accepted");
-      }
+      await page.click("a.btn_eng1");
+      console.log("Language selected...");
+
       await page.waitForSelector("input#nameid");
       await fillCustomerDetails(customer);
       await fillConsentForm();
@@ -222,6 +228,8 @@ const finalbrandBtn = "button.btn4";
       if (e instanceof TargetError) {
         console.log("Your Target is filled up, Can't submit more");
         browser.disconnect();
+      } else if (e instanceof TakenError) {
+        console.log("phone number taken,skipping to next");
       } else {
         console.log(e.message);
       }
