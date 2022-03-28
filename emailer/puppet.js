@@ -45,8 +45,8 @@ const { createMessage, createSubject } = require("./utils");
   await page.goto("https://privateemail.com/");
 
   // Login
-  await page.type("#txtMailbox", "support@win4local.net");
-  await page.type("#txtPwd", "Salman100%great");
+  await page.type("#txtMailbox", "test@mail.net");
+  await page.type("#txtPwd", "test");
   await page.click("#btnLogin");
   await page.waitForNavigation();
   await page.waitForSelector(inputElements.composeBtn, {
