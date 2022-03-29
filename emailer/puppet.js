@@ -23,9 +23,10 @@ const { createMessage, createSubject } = require("./utils");
   }
   const browser = await puppeteer.launch({
     headless: false,
-    slowMo: 200,
+    slowMo: 100,
     defaultViewport: null,
     args: ["--start-maximized"],
+    userDataDir: "./tmp/user-data-dir",
   });
   browser.on("disconnected", () => {
     console.log("::::Puppet stopped::::");
@@ -45,13 +46,17 @@ const { createMessage, createSubject } = require("./utils");
   await page.goto("https://privateemail.com/");
 
   // Login
-  await page.type("#txtMailbox", "test@mail.net");
-  await page.type("#txtPwd", "test");
-  await page.click("#btnLogin");
-  await page.waitForNavigation();
-  await page.waitForSelector(inputElements.composeBtn, {
-    visible: true,
-  });
+  try {
+    await page.type("#txtMailbox", "support@win4local.net");
+    await page.type("#txtPwd", "Salman100%great");
+    await page.click("#btnLogin");
+    await page.waitForNavigation();
+    await page.waitForSelector(inputElements.composeBtn, {
+      visible: true,
+    });
+  } catch (e) {
+    console.log("Skipping login");
+  }
 
   //Send emails to not sent contacts
   for (let [idx, contact] of allContacts.entries()) {
@@ -72,17 +77,16 @@ const { createMessage, createSubject } = require("./utils");
           document.querySelector(inputElements.toField).focus();
         }, inputElements);
 
-        ncp.copy(createMessage(contact.email));
+        ncp.copy(contact.email);
+        await page.waitForTimeout(1000);
         await paste();
         await page.keyboard.press("Enter");
-        await page.type(
-          inputElements.subjectField,
-          createSubject(contact.name)
-        );
-
+        ncp.copy(createSubject(contact.name));
         await page.evaluate((inputElements) => {
           document.querySelector(inputElements.subjectField).focus();
         }, inputElements);
+
+        await paste();
 
         await page.keyboard.press("Tab");
         ncp.copy(createMessage(contact.name));
